@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import * as auth from '../auth.js';
 import './styles/Register.css';
 
 class Register extends React.Component {
@@ -23,7 +24,9 @@ class Register extends React.Component {
   }
   handleSubmit = (e) => {
     e.preventDefault();
-    // здесь обработчик регистрации
+    if (this.state.password === this.state.confirmPassword){
+      auth.register(this.state.username, this.state.password, this.state.email);
+    }
   }
   render(){
     return (

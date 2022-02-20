@@ -31,7 +31,7 @@ class App extends React.Component {
           <Route path="/login">
             <Login />
           </Route>
-          <Route exact path="/">
+          <Route exact path="/calorie-zen">
             {this.state.loggedIn ? <Redirect to="/diary" /> : <Redirect to="/login" />}
           </Route>
         </Switch>

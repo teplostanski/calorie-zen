@@ -1,0 +1,48 @@
+@font-face {
+  src: url(../../fonts/roboto.woff) format('woff');
+  font-family: 'Roboto';
+}
+.register {
+  color: white;
+  font-family: 'Roboto';
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.register__welcome {
+  font-size: 24px;
+}
+.register__form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.register__form label {
+  font-size: 18px;
+  margin-top: 12px;
+  margin-bottom: 6px;
+}
+.register__button-container {
+  display: flex;
+  justify-content: center;
+}
+.register__link {
+  text-align: center;
+  margin-top: 32px;
+  border: none;
+  background-color: rgba(0, 0, 0, 0);
+  color: white;
+  font-size: 16px;
+}
+.register__signin {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 32px;
+}
+.register__signin p {
+  margin-right: 12px;
+}
+.register__login-link {
+  color: white;
+}

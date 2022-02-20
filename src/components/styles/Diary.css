@@ -1,0 +1,48 @@
+@font-face {
+  src: url(../../fonts/roboto.woff) format('woff');
+  font-family: 'Roboto';
+}
+
+@font-face {
+  src: url(../../fonts/sumana.woff) format('woff');
+  font-family: 'Sumana';
+}
+
+.diary {
+  display: flex;
+  justify-content: center;
+  font-family: 'Roboto';
+  min-height: 70vh;
+}
+
+.calories {
+  width: 250px;
+  border: 2px solid #F29279;
+  border-radius: 20px;
+  text-align: center;
+  border-right: none;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.diary h2 {
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 1.2;
+  margin-top: 25px;
+  margin-left: -20px;
+}
+
+.calories__list {
+  font-family: 'Sumana';
+  list-style: none;
+  color: white;
+  padding: 0;
+  margin-left: -20px;
+  font-size: 24px;
+  line-height: 70px;
+  font-weight: bold;
+  margin-top: 36px;
+}
+
+

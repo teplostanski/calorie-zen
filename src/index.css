@@ -5,6 +5,26 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #ED6E4E;
+}
+
+input {
+	border: 1px solid white;
+  background-color: transparent;
+  height: 35px;
+  border-radius: 10px;
+  font-family: inherit;
+  color: #fff;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 code {

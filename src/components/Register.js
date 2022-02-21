@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, withRouter } from 'react-router-dom'; 
+import { Link, withRouter } from 'react-router-dom';
 import * as auth from '../auth.js';
 import './styles/Register.css';
 
@@ -22,22 +22,12 @@ class Register extends React.Component {
       [name]: value
     });
   }
-  
-handleSubmit(e){
+  handleSubmit = (e) => {
     e.preventDefault();
     if (this.state.password === this.state.confirmPassword){
-      const { username, email, password } = this.state;
-      auth.register(username, email, password).then((res) => {
-        if(res){
-          this.setState({
-            message: ''
-          }, () => {
-            this.props.history.push('/login');
-          })
-        } else {
-          this.setState({
-            message: 'Что-то пошло не так!'
-          })
+      auth.register(this.state.username, this.state.password, this.state.email).then((res) => {
+        if(res.statusCode !== 400){
+          this.props.history.push('/login');
         }
       });
     }
@@ -73,6 +63,7 @@ handleSubmit(e){
             <button type="submit" onSubmit={this.handleSubmit} className="register__link">Зарегистрироваться</button>
           </div>
         </form>
+
         <div className="register__signin">
           <p>Уже зарегистрированы?</p>
           <Link to="login" className="register__login-link">Войти</Link>

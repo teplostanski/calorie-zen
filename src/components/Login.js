@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
+import * as auth from '../auth.js';
 import './styles/Login.css';
 
 class Login extends React.Component {
@@ -21,7 +22,23 @@ class Login extends React.Component {
   }
   handleSubmit(e){
     e.preventDefault();
-    // здесь обрабатываем вход в систему
+    // здесь нужно будет добавить логин
+    if (!this.state.username || !this.state.password){
+      return;
+    }
+    auth.authorize(this.state.username, this.state.password)
+    .then((data) => {
+      if (data.jwt) {
+        this.setState({
+          username: '',
+          password: ''
+        }, () => {
+          this.props.handleLogin(); // обновляем стейт внутри App.js
+          this.props.history.push('/diary'); // и переадресуем пользователя! 
+        })
+      }
+    })
+    .catch(err => console.log(err));
   }
   render(){
     return(
@@ -42,6 +59,7 @@ class Login extends React.Component {
             <button type="submit" className="login__link">Войти</button>
           </div>
         </form>
+
         <div className="login__signup">
           <p>Ещё не зарегистрированы?</p>
           <Link to="/register" className="signup__link">Зарегистрироваться</Link>

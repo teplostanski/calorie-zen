@@ -8,6 +8,7 @@ import Login from './Login';
 import NavBar from './NavBar';
 import ProtectedRoute from './ProtectedRoute';
 import * as auth from '../auth.js';
+import * as calData from '../data';
 import './styles/App.css';
 
 class App extends React.Component {
@@ -20,45 +21,38 @@ class App extends React.Component {
     this.handleTokenCheck = this.handleTokenCheck.bind(this);
   }
   componentDidMount(){
-    // проверьте токен здесь
     this.handleTokenCheck();
   }
-  
   handleTokenCheck(){
-    // проверьте, есть ли jwt токен в локальном хранилище браузера
-    // если это так, возьмите этот токен и создайте переменную jwt
-    // если у пользователя есть токен в localStorage,
-    // эта функция проверит валидность токена 
+    if (localStorage.getItem('jwt')){
     const jwt = localStorage.getItem('jwt');
-    if (jwt){
-      // проверим токен
-      // вызовите метод auth.checkToken(), передающий этот токен
-      // внутри следующего then(), если там есть объект res,
-      // установите loggedIn значение true
-      auth.getContent(jwt).then((res) => {
-        if (res){
-          // здесь можем получить данные пользователя!
-          const userData = {
-            username: res.username,
-            email: res.email
-          }
-          // поместим их в стейт внутри App.js
-          // в колбэке this.setState перенаправьте пользователя в /diary
-          this.setState({
-            loggedIn: true,
-            userData
-          }, () => {
-            this.props.history.push("/diary");
-          });
+    // проверяем токен пользователя
+    auth.checkToken(jwt).then((res) => {
+      let calGoal = 0;
+      // найдём выбранное пользователем количество калорий
+      // из списка возможных целей
+      calData.calData.forEach((goal) => {
+        if (goal.id === res.ru_cal_goal){
+          // цель, выбранная пользователем
+          calGoal = goal.calGoal;
         }
-      }); 
-    }
-  } 
-  
-  
-  handleLogin (){
+      })
+      if (res){
+        // если есть цель, добавляем её в стейт
+        this.setState({
+          loggedIn: true,
+          calGoal
+        }, () => {
+          this.props.history.push("/diary");
+        });
+      }
+    }); 
+  }
+  }
+  handleLogin (calGoal){
     this.setState({
-      loggedIn: true
+      loggedIn: true,
+      calGoal
     })
   }
   render(){
@@ -68,7 +62,7 @@ class App extends React.Component {
       <main className="content">
         {this.state.loggedIn && <NavBar />}
         <Switch>
-          <ProtectedRoute path="/diary" loggedIn={this.state.loggedIn} component={Diary} />
+          <ProtectedRoute path="/diary" calGoal={this.state.calGoal} loggedIn={this.state.loggedIn} component={Diary} />
           <ProtectedRoute path="/tips" loggedIn={this.state.loggedIn} component={Tips} />
           <Route path="/register">
             <Register />

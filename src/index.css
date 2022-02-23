@@ -8,7 +8,7 @@ body {
   background-color: #ED6E4E;
 }
 
-input {
+input, select {
 	border: 1px solid white;
   background-color: transparent;
   height: 35px;

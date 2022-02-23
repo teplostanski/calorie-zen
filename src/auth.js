@@ -1,13 +1,13 @@
 export const BASE_URL = 'https://api.nomoreparties.co';
 
-export const register = (username, password, email) => {
+export const register = (username, password, email, calGoal) => {
   return fetch(`${BASE_URL}/auth/local/register`, {
     method: 'POST',
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({username, password, email})
+    body: JSON.stringify({username, password, email, ru_cal_goal: calGoal})
   })
   .then((response) => {
     return response.json();
@@ -30,6 +30,7 @@ export const authorize = (identifier, password) => {
   .then((data) => {
     if (data.user){
       localStorage.setItem('jwt', data.jwt);
+      
       return data;
     } 
   })

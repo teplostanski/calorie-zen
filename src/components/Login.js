@@ -29,7 +29,7 @@ class Login extends React.Component {
     .then((data) => {
       if (data.jwt){
         this.setState({email: '', password: ''} ,() => {
-        this.props.handleLogin();
+        this.props.handleLogin(data.user.ru_cal_goal.calGoal);
         this.props.history.push('/diary');
         })
       }
@@ -52,7 +52,7 @@ class Login extends React.Component {
           </label>
           <input required id="password" name="password" type="password" value={this.state.password} onChange={this.handleChange} />
           <div className="login__button-container">
-            <button type="submit" className="login__link">Войти</button>
+            <button type="submit" onSubmit={this.handleSubmit} className="login__link">Войти</button>
           </div>
         </form>
 

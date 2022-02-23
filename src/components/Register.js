@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import * as auth from '../auth.js';
+import * as data from '../data.js';
 import './styles/Register.css';
 
 class Register extends React.Component {
@@ -11,12 +12,22 @@ class Register extends React.Component {
       email: '',
       password: '',
       confirmPassword: '',
-      calGoal: ''
+      calGoal: 1200
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChangeCals = this.handleChangeCals.bind(this);
+  }
+  componentDidMount(){
+
   }
   handleChange = (e) => {
+    const {name, value} = e.target;
+    this.setState({
+      [name]: value
+    });
+  }
+  handleChangeCals = (e) => {
     const {name, value} = e.target;
     this.setState({
       [name]: value
@@ -25,7 +36,7 @@ class Register extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault();
     if (this.state.password === this.state.confirmPassword){
-      auth.register(this.state.username, this.state.password, this.state.email).then((res) => {
+      auth.register(this.state.username, this.state.password, this.state.email, this.state.calGoal).then((res) => {
         if(res.statusCode !== 400){
           this.props.history.push('/login');
         }
@@ -58,7 +69,15 @@ class Register extends React.Component {
           <label htmlFor="calGoal">
             Калории за день:
           </label>
-          <input id="calGoal" name="calGoal" type="number" value={this.state.calGoal} onChange={this.handleChange} />
+          <select name="calGoal" value={this.state.calGoal} onChange={this.handleChangeCals}>
+            {
+              data.calData.map((item, i) => {
+                return (
+                  <option value={item.id} key={i}>{item.calGoal}</option>
+                )
+              })
+            }
+          </select>
           <div className="register__button-container">
             <button type="submit" onSubmit={this.handleSubmit} className="register__link">Зарегистрироваться</button>
           </div>

@@ -22,19 +22,15 @@ class Login extends React.Component {
   }
   handleSubmit(e){
     e.preventDefault();
-    // здесь нужно будет добавить логин
     if (!this.state.username || !this.state.password){
       return;
     }
     auth.authorize(this.state.username, this.state.password)
     .then((data) => {
-      if (data.jwt) {
-        this.setState({
-          username: '',
-          password: ''
-        }, () => {
-          this.props.handleLogin(); // обновляем стейт внутри App.js
-          this.props.history.push('/diary'); // и переадресуем пользователя! 
+      if (data.jwt){
+        this.setState({email: '', password: ''} ,() => {
+        this.props.handleLogin();
+        this.props.history.push('/diary');
         })
       }
     })
